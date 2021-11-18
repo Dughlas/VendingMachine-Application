@@ -14,6 +14,28 @@ import java.util.Scanner;
 
 public class VendingMachine 
 {
+    public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
+
+    public VendingMachine(BigDecimal currentMoneyProvided, int stock) {
+        this.currentMoneyProvided = currentMoneyProvided;
+        this.stock = stock;
+    }
+
+    public BigDecimal getCurrentMoneyProvided() {
+        return currentMoneyProvided;
+    }
+
+    public void setCurrentMoneyProvided(BigDecimal currentMoneyProvided) {
+        this.currentMoneyProvided = currentMoneyProvided;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public VendingMachine(String positionInMachine, String nameOfProduct, BigDecimal price, String typeOfItem) {
     }
@@ -27,8 +49,8 @@ public class VendingMachine
     public void run() throws IOException {
         List<VendingMachineItems>vendingMachineItems=readVendingMachine();
 
-        boolean shouldLoop = true;
-                while(shouldLoop)
+
+                while(true)
         {
             UserOutput.displayHomeScreen();
             String choice = UserInput.getHomeScreenOption();
@@ -37,22 +59,30 @@ public class VendingMachine
             {
                 // display the vending machine slots
 
+            UserOutput.printVendingItems(vendingMachineItems);
 
-
-
-                System.out.println(readVendingMachine());
 
             }
             else if(choice.equals("purchase"))
             {
                 String purchaseScreen = UserInput.getPurchaseMenuOptions();
 
-                boolean willLoop = true;
-                while(willLoop){
-                    if (choice.equals("feed")){
+                while(true){
+                        if (purchaseScreen.equals("feed")) {
 
-                    }
-                }
+
+                            BigDecimal moneyIn = UserInput.putMoneyIn();
+                            currentMoneyProvided= currentMoneyProvided.add(moneyIn);
+                            System.out.println("Current money provided: "+currentMoneyProvided);
+
+                        }
+                        else if(purchaseScreen.equals("product")){
+
+                        }
+                        else if (purchaseScreen.equals("finish")){
+
+                        }
+                        }
             }
             else if(choice.equals("exit"))
             {
@@ -75,13 +105,12 @@ public class VendingMachine
             BigDecimal price = BigDecimal.valueOf(Double.parseDouble((lineArray[2])));
             String typeOfItem = lineArray[3];
 
-            VendingMachineItems vendingMachineItems = new VendingMachineItems(positionInMachine, nameOfProduct, price, typeOfItem);
+            VendingMachineItems vendingMachineItems = new VendingMachineItems(nameOfProduct, price, stock, typeOfItem);
 
             localVendingMachineItems.add(vendingMachineItems);
-            System.out.println(lineArray[0] +" "+ lineArray[1] +" "+ lineArray[2] +" "+ lineArray[3] +" "+ stock);
+//            System.out.println(lineArray[0] +" "+ lineArray[1] +" "+ lineArray[2] +" "+ lineArray[3] +" "+ stock);
         }
-
+        System.out.println(localVendingMachineItems.get(1).getName());
         return localVendingMachineItems; }
-
 
 }

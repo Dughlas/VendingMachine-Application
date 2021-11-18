@@ -9,8 +9,6 @@ public class VendingMachineItems {
     private String slotLocation;
 
 
-    public VendingMachineItems(String positionInMachine, String nameOfProduct, BigDecimal price, String typeOfItem) {
-    }
 
     public String getName() {
         return name;

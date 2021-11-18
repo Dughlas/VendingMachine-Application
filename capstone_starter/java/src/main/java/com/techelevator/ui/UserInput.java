@@ -1,5 +1,8 @@
 package com.techelevator.ui;
 
+import com.techelevator.application.VendingMachine;
+import com.techelevator.models.VendingMachineItems;
+
 import java.math.BigDecimal;
 import java.util.Scanner;
 
@@ -10,7 +13,7 @@ import java.util.Scanner;
  */
 public class UserInput
 {
-    private int currentMoneyProvided;
+
     private static Scanner scanner = new Scanner(System.in);
 
     public static String getHomeScreenOption()
@@ -50,15 +53,15 @@ public class UserInput
         System.out.println("3) Finish Transaction");
 
         System.out.println();
-        System.out.print("Current Money Provided: ");
+
 
         System.out.println();
         System.out.println("Please select an option: ");
 
-        String selectedOption = scanner.nextLine();
-        String option = selectedOption.trim().toLowerCase();
+        String selectedOption2 = scanner.nextLine();
+        String option2 = selectedOption2.trim().toLowerCase();
 
-        switch (option) {
+        switch (option2) {
             case "1":
                 return "feed";
             case "2":
@@ -72,8 +75,14 @@ public class UserInput
 
 
     }
-    public BigDecimal feedMoney(int moneyFed){
-     currentMoneyProvided = currentMoneyProvided + moneyFed;
-        return BigDecimal.valueOf(currentMoneyProvided);
+
+
+
+    public static BigDecimal putMoneyIn(){
+        System.out.println("Please insert your cash here:");
+        String moneyIn = scanner.nextLine();
+        return new BigDecimal(moneyIn);
+
     }
+
 }

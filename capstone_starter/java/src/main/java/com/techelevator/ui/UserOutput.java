@@ -4,6 +4,7 @@ import com.techelevator.application.VendingMachine;
 import com.techelevator.models.VendingMachineItems;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,6 +32,12 @@ public class UserOutput
         System.out.println("***************************************************");
         System.out.println();
     }
+    public static void printVendingItems(List<VendingMachineItems> printList){
+        for(VendingMachineItems item: printList){
+            System.out.println(item.getSlotLocation()+" "+item.getName()+" "+item.getPrice()+" "+item.getStock());
 
+        }
+
+    }
 
 }
