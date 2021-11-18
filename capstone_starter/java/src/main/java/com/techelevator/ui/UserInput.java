@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class UserInput
 {
+    private int currentMoneyProvided;
     private static Scanner scanner = new Scanner(System.in);
 
     public static String getHomeScreenOption()
@@ -39,6 +40,40 @@ public class UserInput
         }
 
     }
+    public static String getPurchaseMenuOptions()
+    {
 
-    
+        System.out.println();
+
+        System.out.println("1) Feed Money");
+        System.out.println("2) Select Product");
+        System.out.println("3) Finish Transaction");
+
+        System.out.println();
+        System.out.print("Current Money Provided: ");
+
+        System.out.println();
+        System.out.println("Please select an option: ");
+
+        String selectedOption = scanner.nextLine();
+        String option = selectedOption.trim().toLowerCase();
+
+        switch (option) {
+            case "1":
+                return "feed";
+            case "2":
+                return "product";
+            case "3":
+                return "finish";
+            default:
+                return "";
+        }
+
+
+
+    }
+    public BigDecimal feedMoney(int moneyFed){
+     currentMoneyProvided = currentMoneyProvided + moneyFed;
+        return BigDecimal.valueOf(currentMoneyProvided);
+    }
 }

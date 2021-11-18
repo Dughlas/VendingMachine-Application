@@ -8,6 +8,7 @@ public class VendingMachineItems {
     private int stock;
     private String slotLocation;
 
+
     public VendingMachineItems(String positionInMachine, String nameOfProduct, BigDecimal price, String typeOfItem) {
     }
 

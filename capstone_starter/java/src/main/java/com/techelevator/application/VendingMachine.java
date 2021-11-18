@@ -22,31 +22,6 @@ public class VendingMachine
 
     }
 
-    private List<VendingMachineItems> readVendingMachine() throws IOException {
-        File file = new File("vendingmachine.csv");
-        List<VendingMachineItems> localVendingMachineItems = new ArrayList<>();
-        try {
-            Scanner fileScanner = new Scanner(file);
-
-            while (fileScanner.hasNextLine()) {
-                String line = fileScanner.nextLine();
-                String[] lineArray = line.split("\\|");
-
-                String positionInMachine = lineArray[0];
-                String nameOfProduct = lineArray[1];
-                BigDecimal price = BigDecimal.valueOf(Double.parseDouble((lineArray[2])));
-                String typeOfItem = lineArray[3];
-
-                VendingMachineItems vendingMachineItems = new VendingMachineItems(positionInMachine, nameOfProduct, price, typeOfItem);
-
-                localVendingMachineItems.add(vendingMachineItems);
-
-            }
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        return readVendingMachine(); }
-
 
         
     public void run() throws IOException {
@@ -65,12 +40,19 @@ public class VendingMachine
 
 
 
-                System.out.println("display");
+                System.out.println(readVendingMachine());
 
             }
             else if(choice.equals("purchase"))
             {
-                System.out.println("purchase");
+                String purchaseScreen = UserInput.getPurchaseMenuOptions();
+
+                boolean willLoop = true;
+                while(willLoop){
+                    if (choice.equals("feed")){
+
+                    }
+                }
             }
             else if(choice.equals("exit"))
             {
@@ -79,5 +61,27 @@ public class VendingMachine
             }
         }
     }
-    
+    int stock = 5;
+    private List<VendingMachineItems> readVendingMachine() throws IOException {
+        File file = new File("vendingmachine.csv");
+        List<VendingMachineItems> localVendingMachineItems = new ArrayList<>();
+        Scanner fileScanner = new Scanner(file);
+        while  (fileScanner.hasNextLine()){
+            String line = fileScanner.nextLine();
+            String[] lineArray = line.split("\\|");
+
+            String positionInMachine = lineArray[0];
+            String nameOfProduct = lineArray[1];
+            BigDecimal price = BigDecimal.valueOf(Double.parseDouble((lineArray[2])));
+            String typeOfItem = lineArray[3];
+
+            VendingMachineItems vendingMachineItems = new VendingMachineItems(positionInMachine, nameOfProduct, price, typeOfItem);
+
+            localVendingMachineItems.add(vendingMachineItems);
+            System.out.println(lineArray[0] +" "+ lineArray[1] +" "+ lineArray[2] +" "+ lineArray[3] +" "+ stock);
+        }
+
+        return localVendingMachineItems; }
+
+
 }

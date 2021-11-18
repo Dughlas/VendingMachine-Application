@@ -1,5 +1,8 @@
 package com.techelevator.ui;
 
+import com.techelevator.application.VendingMachine;
+import com.techelevator.models.VendingMachineItems;
+
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -28,9 +31,6 @@ public class UserOutput
         System.out.println("***************************************************");
         System.out.println();
     }
-    public static void displayDisplay()
-    {
 
 
-    }
 }
