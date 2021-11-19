@@ -1,5 +1,6 @@
 package com.techelevator.application;
 
+import com.techelevator.models.Vendable;
 import com.techelevator.models.VendingMachineItems;
 import com.techelevator.ui.UserInput;
 import com.techelevator.ui.UserOutput;
@@ -86,17 +87,17 @@ public class VendingMachine {
                         System.out.println("found it");
                         itemPresent = true;
 
+
                         // check if there is there is enough money to buy
 
 
-                            BigDecimal moneyIn = UserInput.putMoneyIn();
-                            currentMoneyProvided= currentMoneyProvided.add(moneyIn);
-                            System.out.println("Current money provided: "+currentMoneyProvided);
-                            UserInput.getPurchaseMenuOptions();
-
 
                         }
+                    if(itemPresent && currentMoneyProvided.compareTo(item.getPrice()) > 0){
+                        currentMoneyProvided = currentMoneyProvided.subtract(item.getPrice());
+                        item.setStock(item.getStock() - 1);
 
+                    }
                 }
 
                 if (!itemPresent) {

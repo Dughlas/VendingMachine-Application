@@ -8,8 +8,12 @@ public class VendingMachineItems {
     private BigDecimal price;
     private String itemType;
     private String slotLocation;
-    private int stock = 0;
+    private int stock = 5;
+    private String sound;
 
+    public VendingMachineItems(String sound) {
+        this.sound = sound;
+    }
 
     public VendingMachineItems(String name, BigDecimal price, String itemType, String slotLocation, int stock) {
         this.name = name;
@@ -18,6 +22,12 @@ public class VendingMachineItems {
         this.slotLocation = slotLocation;
         this.stock = stock;
     }
+
+
+    public String getSound() {
+        return sound;
+    }
+
     public String getStockString(){
         if(this.stock==0){
             return "Sold Out";
@@ -72,4 +82,5 @@ public class VendingMachineItems {
         this.slotLocation = slotLocation;
 
     }
+
 }

@@ -1,7 +1,9 @@
 package com.techelevator.ui;
 
 import com.techelevator.application.VendingMachine;
+import com.techelevator.models.Gum;
 import com.techelevator.models.Stock;
+import com.techelevator.models.Vendable;
 import com.techelevator.models.VendingMachineItems;
 
 import java.math.BigDecimal;
@@ -61,6 +63,15 @@ public class UserOutput {
                 System.out.println("SOLDOUT");
 
             }
+
         }
+
     }
+    public static void vendingSound(){
+        Vendable[] vendable = new Vendable[]{(Vendable) new Gum()};
+        for(Vendable sound : vendable)
+        String noise = sound.getSound();
+        System.out.println();
+    }
+
 }
