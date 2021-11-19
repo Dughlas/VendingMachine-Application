@@ -57,21 +57,25 @@ public class UserOutput {
 
     }
 
-    public static void printSoldOut(List<VendingMachineItems> printList) {
-        for (VendingMachineItems item : printList) {
-            if (item.getStock() < 1) {
-                System.out.println("SOLDOUT");
+    public static void printSoldOut() {
+
+        System.out.println("SOLDOUT");
+
 
             }
+    public static void youreBroke(){
+        System.out.println("YOU'RE BROKE");
+    }
 
+
+
+    public static void vendingSound() {
+        Vendable[] vendable = new Vendable[]{new Gum()};
+        for (Vendable sound : vendable) {
+        String noise = sound.getSound();
+            System.out.println(noise);
         }
 
-    }
-    public static void vendingSound(){
-        Vendable[] vendable = new Vendable[]{(Vendable) new Gum()};
-        for(Vendable sound : vendable)
-        String noise = sound.getSound();
-        System.out.println();
-    }
 
+    }
 }

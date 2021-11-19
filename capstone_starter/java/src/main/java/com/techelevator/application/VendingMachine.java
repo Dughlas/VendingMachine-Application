@@ -1,5 +1,6 @@
 package com.techelevator.application;
 
+import com.techelevator.models.Change;
 import com.techelevator.models.Vendable;
 import com.techelevator.models.VendingMachineItems;
 import com.techelevator.ui.UserInput;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class VendingMachine {
+public class VendingMachine extends Change {
     public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
 
 
@@ -84,8 +85,9 @@ public class VendingMachine {
                     VendingMachineItems item = vendingMachineItems.get(i);
 
                     if (item.getSlotLocation().equals(code)) {
-                        System.out.println("found it");
+
                         itemPresent = true;
+
 
 
                         // check if there is there is enough money to buy
@@ -93,11 +95,26 @@ public class VendingMachine {
 
 
                         }
-                    if(itemPresent && currentMoneyProvided.compareTo(item.getPrice()) > 0){
+                    if(itemPresent && currentMoneyProvided.compareTo(item.getPrice()) > 0) {
                         currentMoneyProvided = currentMoneyProvided.subtract(item.getPrice());
-                        item.setStock(item.getStock() - 1);
 
+                        if (item.getStock() >= 1) {
+                            item.setStock(item.getStock() - 1);
+                            UserOutput.vendingSound();
+                            System.out.println(currentMoneyProvided);
+                            break;
+
+                        }
+                        if (item.getStock() < 1) {
+                            UserOutput.printSoldOut();
+                           break;
+                        }
                     }
+                    if(currentMoneyProvided.compareTo(item.getPrice()) < 0){
+                        UserOutput.youreBroke();
+                        break;
+                    }
+
                 }
 
                 if (!itemPresent) {
@@ -106,6 +123,7 @@ public class VendingMachine {
 
             }
             else if (choice.equals("finish")) {
+                changeCalculator(currentMoneyProvided);
                 stay = false;
             }
 
@@ -113,6 +131,30 @@ public class VendingMachine {
 
 
     }
+    public void changeCalculator(BigDecimal currentMoneyProvided) {
+       Double quarterCount = 0.0;
+        Double dimeCount = 0.0;
+        Double nickelCount = 0.0;
+        Double remainder = 0.0;
+        Double remainder2 = 0.0;
+
+        Double cmpDouble = currentMoneyProvided.doubleValue();
+
+        quarterCount = cmpDouble / .25;
+
+        remainder = cmpDouble % 0.25;
+        dimeCount = remainder / .10;
+        remainder2 = remainder % .10;
+        nickelCount = remainder2 / .05;
+
+        Integer quarterInt = quarterCount.intValue();
+        Integer dimeInt = dimeCount.intValue();
+        Integer nickelInt = nickelCount.intValue();
+        System.out.println("Quarters: "+quarterInt+" Dimes: "+dimeInt+ " Nickels: "+nickelInt);
+    }
+
+
+
 
 
     private List<VendingMachineItems> readVendingMachine() throws IOException {
@@ -138,5 +180,6 @@ public class VendingMachine {
         System.out.println(localVendingMachineItems.get(1).getName());
         return localVendingMachineItems;
     }
+
 
 }
