@@ -89,12 +89,13 @@ public class VendingMachine {
                         // check if there is there is enough money to buy
 
 
+                            BigDecimal moneyIn = UserInput.putMoneyIn();
+                            currentMoneyProvided= currentMoneyProvided.add(moneyIn);
+                            System.out.println("Current money provided: "+currentMoneyProvided);
+                            UserInput.getPurchaseMenuOptions();
 
 
-
-                        break;
-
-                    }
+                        }
 
                 }
 
