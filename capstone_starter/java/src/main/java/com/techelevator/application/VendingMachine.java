@@ -74,10 +74,13 @@ public class VendingMachine
                             BigDecimal moneyIn = UserInput.putMoneyIn();
                             currentMoneyProvided= currentMoneyProvided.add(moneyIn);
                             System.out.println("Current money provided: "+currentMoneyProvided);
+                            UserInput.getPurchaseMenuOptions();
+
 
                         }
                         else if(purchaseScreen.equals("product")){
-
+                            System.out.println("yay");
+                            break;
                         }
                         else if (purchaseScreen.equals("finish")){
 
