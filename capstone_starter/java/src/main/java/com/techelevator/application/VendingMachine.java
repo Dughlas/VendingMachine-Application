@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class VendingMachine 
-{
+public class VendingMachine {
     public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
 
-    public VendingMachine(BigDecimal currentMoneyProvided, int stock) {
+
+    public VendingMachine(BigDecimal currentMoneyProvided) {
         this.currentMoneyProvided = currentMoneyProvided;
-        this.stock = stock;
+
     }
 
     public BigDecimal getCurrentMoneyProvided() {
@@ -29,74 +29,96 @@ public class VendingMachine
         this.currentMoneyProvided = currentMoneyProvided;
     }
 
-    public int getStock() {
-        return stock;
-    }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
 
-    public VendingMachine(String positionInMachine, String nameOfProduct, BigDecimal price, String typeOfItem) {
-    }
+    private List<VendingMachineItems> vendingMachineItems;
 
     public VendingMachine() {
+        try {
+            this.vendingMachineItems = readVendingMachine();
+        } catch (IOException e) {
 
+        }
     }
 
 
-        
+
     public void run() throws IOException {
-        List<VendingMachineItems>vendingMachineItems=readVendingMachine();
-
-
-                while(true)
+        while (true)
         {
             UserOutput.displayHomeScreen();
             String choice = UserInput.getHomeScreenOption();
 
-            if(choice.equals("display"))
-            {
-                // display the vending machine slots
-
-            UserOutput.printVendingItems(vendingMachineItems);
-
-
-            }
-            else if(choice.equals("purchase"))
-            {
-                String purchaseScreen = UserInput.getPurchaseMenuOptions();
-
-                while(true){
-                        if (purchaseScreen.equals("feed")) {
-
-
-                            BigDecimal moneyIn = UserInput.putMoneyIn();
-                            currentMoneyProvided= currentMoneyProvided.add(moneyIn);
-                            System.out.println("Current money provided: "+currentMoneyProvided);
-
-                        }
-                        else if(purchaseScreen.equals("product")){
-
-                        }
-                        else if (purchaseScreen.equals("finish")){
-
-                        }
-                        }
-            }
-            else if(choice.equals("exit"))
-            {
-                System.out.println("Good Bye!");
+            if (choice.equals("display")) {
+                UserOutput.printVendingItems(vendingMachineItems);
+            } else if (choice.equals("purchase")) {
+                option2Choices();
+            } else if (choice.equals("exit")) {
                 break;
             }
+
         }
     }
-    int stock = 5;
+
+    public void option2Choices() {
+
+        boolean stay = true;
+        do {
+
+            String choice = UserInput.getPurchaseMenuOptions();
+
+            if (choice.equals("feed")) {
+                BigDecimal moneyIn = UserInput.putMoneyIn();
+                currentMoneyProvided = currentMoneyProvided.add(moneyIn);
+                System.out.println("Current money provided: " + currentMoneyProvided);
+            }
+            else if (choice.equals("product")) {
+                UserOutput.printJustItemsAndCodes(vendingMachineItems);
+                String code = UserInput.selectItemCode();
+
+                boolean itemPresent = false;
+
+
+                for (int i = 0; i < vendingMachineItems.size(); i++) {
+                    VendingMachineItems item = vendingMachineItems.get(i);
+
+                    if (item.getSlotLocation().equals(code)) {
+                        System.out.println("found it");
+                        itemPresent = true;
+
+                        // check if there is there is enough money to buy
+
+
+
+
+
+                        break;
+
+                    }
+
+                }
+
+                if (!itemPresent) {
+                    System.out.println("product doesn't exist");
+                }
+
+            }
+            else if (choice.equals("finish")) {
+                stay = false;
+            }
+
+        } while (stay);
+
+
+    }
+
+
     private List<VendingMachineItems> readVendingMachine() throws IOException {
+
         File file = new File("vendingmachine.csv");
         List<VendingMachineItems> localVendingMachineItems = new ArrayList<>();
         Scanner fileScanner = new Scanner(file);
-        while  (fileScanner.hasNextLine()){
+        while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine();
             String[] lineArray = line.split("\\|");
 
@@ -105,12 +127,14 @@ public class VendingMachine
             BigDecimal price = BigDecimal.valueOf(Double.parseDouble((lineArray[2])));
             String typeOfItem = lineArray[3];
 
-            VendingMachineItems vendingMachineItems = new VendingMachineItems(nameOfProduct, price, stock, typeOfItem);
+
+            VendingMachineItems vendingMachineItems = new VendingMachineItems(nameOfProduct, price, typeOfItem, positionInMachine);
 
             localVendingMachineItems.add(vendingMachineItems);
 //            System.out.println(lineArray[0] +" "+ lineArray[1] +" "+ lineArray[2] +" "+ lineArray[3] +" "+ stock);
         }
         System.out.println(localVendingMachineItems.get(1).getName());
-        return localVendingMachineItems; }
+        return localVendingMachineItems;
+    }
 
 }

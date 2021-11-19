@@ -8,16 +8,14 @@ import java.util.Scanner;
 
 /**
  * Responsibilities: This class should handle receiving ALL input from the User
- * 
+ * <p>
  * Dependencies: None
  */
-public class UserInput
-{
+public class UserInput {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public static String getHomeScreenOption()
-    {
+    public static String getHomeScreenOption() {
         System.out.println("What would you like to do?");
         System.out.println();
 
@@ -43,8 +41,8 @@ public class UserInput
         }
 
     }
-    public static String getPurchaseMenuOptions()
-    {
+
+    public static String getPurchaseMenuOptions() {
 
         System.out.println();
 
@@ -73,16 +71,19 @@ public class UserInput
         }
 
 
-
     }
 
 
-
-    public static BigDecimal putMoneyIn(){
+    public static BigDecimal putMoneyIn() {
         System.out.println("Please insert your cash here:");
         String moneyIn = scanner.nextLine();
         return new BigDecimal(moneyIn);
 
     }
 
+    public static String selectItemCode() {
+        System.out.println("Please type an Item Code (all caps): ");
+        String itemCodeSelect = scanner.nextLine();
+        return new String(itemCodeSelect);
+    }
 }

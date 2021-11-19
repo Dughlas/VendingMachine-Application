@@ -3,12 +3,35 @@ package com.techelevator.models;
 import java.math.BigDecimal;
 
 public class VendingMachineItems {
+
     private String name;
     private BigDecimal price;
-    private int stock;
+    private String itemType;
     private String slotLocation;
+    private int stock = 0;
 
 
+    public VendingMachineItems(String name, BigDecimal price, String itemType, String slotLocation, int stock) {
+        this.name = name;
+        this.price = price;
+        this.itemType = itemType;
+        this.slotLocation = slotLocation;
+        this.stock = stock;
+    }
+    public String getStockString(){
+        if(this.stock==0){
+            return "Sold Out";
+        }
+        return this.stock+"";
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public String getName() {
         return name;
@@ -26,12 +49,12 @@ public class VendingMachineItems {
         this.price = price;
     }
 
-    public int getStock() {
-        return stock;
+    public String getItemType() {
+        return itemType;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
     public String getSlotLocation() {
@@ -42,10 +65,10 @@ public class VendingMachineItems {
         this.slotLocation = slotLocation;
     }
 
-    public VendingMachineItems(String name, BigDecimal price, int stock, String slotLocation) {
+    public VendingMachineItems(String name, BigDecimal price, String itemType, String slotLocation) {
         this.name = name;
         this.price = price;
-        this.stock = stock;
+        this.itemType = itemType;
         this.slotLocation = slotLocation;
 
     }
