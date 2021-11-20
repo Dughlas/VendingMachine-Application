@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class VendingMachine extends Change {
     public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
@@ -72,6 +73,7 @@ public class VendingMachine extends Change {
             if (choice.equals("feed")) {
                 BigDecimal moneyIn = UserInput.putMoneyIn();
                 currentMoneyProvided = currentMoneyProvided.add(moneyIn);
+
                 System.out.println("Current money provided: " + currentMoneyProvided);
             }
             else if (choice.equals("product")) {
@@ -150,8 +152,11 @@ public class VendingMachine extends Change {
         Integer quarterInt = quarterCount.intValue();
         Integer dimeInt = dimeCount.intValue();
         Integer nickelInt = nickelCount.intValue();
+
         System.out.println("Quarters: "+quarterInt+" Dimes: "+dimeInt+ " Nickels: "+nickelInt);
+        currentMoneyProvided = BigDecimal.valueOf(0.0);
     }
+
 
 
 

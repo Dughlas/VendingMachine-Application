@@ -23,6 +23,10 @@ public class VendingMachineItems implements Vendable {
         this.stock = stock;
     }
 
+    public VendingMachineItems() {
+
+    }
+
 
     public String getSound() {
         return sound;
