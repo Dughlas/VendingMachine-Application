@@ -1,13 +1,10 @@
 package com.techelevator.application;
-import com.techelevator.models.Change;
 import com.techelevator.models.Logger;
-import com.techelevator.models.SalesReport;
 import com.techelevator.models.VendingMachineItems;
 import com.techelevator.ui.UserInput;
 import com.techelevator.ui.UserOutput;
 import java.time.LocalDateTime;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,23 +12,11 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class VendingMachine extends Change {
+public class VendingMachine {
     public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
 
 
 
-    public VendingMachine(BigDecimal currentMoneyProvided) {
-        this.currentMoneyProvided = currentMoneyProvided;
-
-    }
-
-    public BigDecimal getCurrentMoneyProvided() {
-        return currentMoneyProvided;
-    }
-
-    public void setCurrentMoneyProvided(BigDecimal currentMoneyProvided) {
-        this.currentMoneyProvided = currentMoneyProvided;
-    }
 
 
 
