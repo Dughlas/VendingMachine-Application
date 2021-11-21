@@ -1,7 +1,7 @@
 package com.techelevator.application;
-import com.techelevator.models.Logger;
 import com.techelevator.models.Change;
-import com.techelevator.models.Vendable;
+import com.techelevator.models.Logger;
+import com.techelevator.models.SalesReport;
 import com.techelevator.models.VendingMachineItems;
 import com.techelevator.ui.UserInput;
 import com.techelevator.ui.UserOutput;
@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 public class VendingMachine extends Change {
     public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
+
 
 
     public VendingMachine(BigDecimal currentMoneyProvided) {
@@ -71,11 +72,15 @@ public class VendingMachine extends Change {
             String choice = UserInput.getPurchaseMenuOptions();
 
             if (choice.equals("feed")) {
-              Logger logger = new Logger("Log.txt");
+                Logger logger = new Logger("Log.txt");
                 BigDecimal moneyIn = UserInput.putMoneyIn();
-                currentMoneyProvided = currentMoneyProvided.add(moneyIn);
-                System.out.println("Current money provided: " + currentMoneyProvided);
-                logger.write(LocalDateTime.now().toString() +" Feed Me! "+ currentMoneyProvided);
+                if (moneyIn.equals(BigDecimal.valueOf(5)) || moneyIn.equals(BigDecimal.valueOf(10)) || moneyIn.equals(BigDecimal.valueOf(1)) || moneyIn.equals(BigDecimal.valueOf(20))) {
+                    currentMoneyProvided = currentMoneyProvided.add(moneyIn);
+                    System.out.println("Current money provided: " + currentMoneyProvided);
+                    logger.write(LocalDateTime.now().toString() + " Feed Me! " + currentMoneyProvided);
+                } else {
+                    System.out.println("UNACCEPTABLE!!!!");
+                }
             }
             else if (choice.equals("product")) {
                 UserOutput.printJustItemsAndCodes(vendingMachineItems);
@@ -142,27 +147,20 @@ public class VendingMachine extends Change {
 
     }
     public void changeCalculator(BigDecimal neededChange) {
-       Double quarterCount = 0.0;
-        Double dimeCount = 0.0;
-        Double nickelCount = 0.0;
 
-        Double remainder = 0.0;
-        Double remainder2 = 0.0;
+        int remainder ;
 
-        Double cmpDouble = neededChange.doubleValue();
 
-        quarterCount = cmpDouble / .25;
+        double d = neededChange.doubleValue() * 100;
 
-        remainder = cmpDouble % 0.25;
-        dimeCount = remainder / .10;
-        remainder2 = remainder % .10;
-        nickelCount = remainder2 / .05;
+        int numberOfQuarters = (int) (d/25);
+        remainder = (int) (d%25);
+        int numberOfDimes = remainder /10;
+        remainder = remainder % 10;
+        int numberOfNickels = remainder / 5;
 
-        Integer quarterInt = quarterCount.intValue();
-        Integer dimeInt = dimeCount.intValue();
-        Integer nickelInt = nickelCount.intValue();
+        System.out.println("Number of Quarters: " + numberOfQuarters + " Number of Dimes: " + numberOfDimes + " Number of Nickels " + numberOfNickels);
 
-        System.out.println("Quarters: "+quarterInt+" Dimes: "+dimeInt+ " Nickels: "+nickelInt);
     }
 
 
