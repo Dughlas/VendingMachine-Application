@@ -1,11 +1,11 @@
 package com.techelevator.application;
-
+import com.techelevator.models.Logger;
 import com.techelevator.models.Change;
 import com.techelevator.models.Vendable;
 import com.techelevator.models.VendingMachineItems;
 import com.techelevator.ui.UserInput;
 import com.techelevator.ui.UserOutput;
-
+import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
+
 
 public class VendingMachine extends Change {
     public BigDecimal currentMoneyProvided = BigDecimal.valueOf(0.0);
@@ -71,10 +71,11 @@ public class VendingMachine extends Change {
             String choice = UserInput.getPurchaseMenuOptions();
 
             if (choice.equals("feed")) {
+              Logger logger = new Logger("Log.txt");
                 BigDecimal moneyIn = UserInput.putMoneyIn();
                 currentMoneyProvided = currentMoneyProvided.add(moneyIn);
-
                 System.out.println("Current money provided: " + currentMoneyProvided);
+                logger.write(LocalDateTime.now().toString() +" Feed Me! "+ currentMoneyProvided);
             }
             else if (choice.equals("product")) {
                 UserOutput.printJustItemsAndCodes(vendingMachineItems);
@@ -104,6 +105,9 @@ public class VendingMachine extends Change {
                             item.setStock(item.getStock() - 1);
                             UserOutput.vendingSound();
                             System.out.println(currentMoneyProvided);
+                            Logger logger = new Logger("Log.txt");
+                            logger.write(LocalDateTime.now().toString() +" "+ item.getName() +" "+ item.getSlotLocation() +" "+
+                                    currentMoneyProvided.add(item.getPrice()) +" "+ currentMoneyProvided );
                             break;
 
                         }
@@ -126,21 +130,26 @@ public class VendingMachine extends Change {
             }
             else if (choice.equals("finish")) {
                 changeCalculator(currentMoneyProvided);
-                stay = false;
+                Logger logger = new Logger("Log.txt");
+                logger.write(LocalDateTime.now().toString() + " Give Change " + currentMoneyProvided +" 0.0 ");
+                currentMoneyProvided.equals(BigDecimal.valueOf(0.0));
+                        stay = false;
+
             }
 
         } while (stay);
 
 
     }
-    public void changeCalculator(BigDecimal currentMoneyProvided) {
+    public void changeCalculator(BigDecimal neededChange) {
        Double quarterCount = 0.0;
         Double dimeCount = 0.0;
         Double nickelCount = 0.0;
+
         Double remainder = 0.0;
         Double remainder2 = 0.0;
 
-        Double cmpDouble = currentMoneyProvided.doubleValue();
+        Double cmpDouble = neededChange.doubleValue();
 
         quarterCount = cmpDouble / .25;
 
@@ -154,7 +163,6 @@ public class VendingMachine extends Change {
         Integer nickelInt = nickelCount.intValue();
 
         System.out.println("Quarters: "+quarterInt+" Dimes: "+dimeInt+ " Nickels: "+nickelInt);
-        currentMoneyProvided = BigDecimal.valueOf(0.0);
     }
 
 
